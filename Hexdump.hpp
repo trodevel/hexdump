@@ -11,17 +11,17 @@ struct CustomHexdump
     CustomHexdump(const void* data, unsigned length) :
         mData(static_cast<const unsigned char*>(data)), mLength(length) { }
     const unsigned char* mData;
-    const unsigned mLength;
+    const std::size_t mLength;
 };
 
 template <unsigned RowSize, bool ShowAscii>
 std::ostream& operator<<(std::ostream& out, const CustomHexdump<RowSize, ShowAscii>& dump)
 {
     out.fill('0');
-    for (int i = 0; i < dump.mLength; i += RowSize)
+    for (std::size_t i = 0; i < dump.mLength; i += RowSize)
     {
         out << "0x" << std::setw(6) << std::hex << i << ": ";
-        for (int j = 0; j < RowSize; ++j)
+        for (std::size_t j = 0; j < RowSize; ++j)
         {
             if (i + j < dump.mLength)
             {
@@ -36,7 +36,7 @@ std::ostream& operator<<(std::ostream& out, const CustomHexdump<RowSize, ShowAsc
         out << " ";
         if (ShowAscii)
         {
-            for (int j = 0; j < RowSize; ++j)
+            for (std::size_t j = 0; j < RowSize; ++j)
             {
                 if (i + j < dump.mLength)
                 {
